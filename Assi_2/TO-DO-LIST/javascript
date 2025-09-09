@@ -1,4 +1,3 @@
-
 window.onload = function () {
   const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
   savedTasks.forEach(task => createTaskElement(task.text, task.completed));
