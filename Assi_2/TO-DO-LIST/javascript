@@ -1,53 +1,95 @@
+
+window.onload = function () {
+  const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  savedTasks.forEach(task => createTaskElement(task.text, task.completed));
+};
+
 function addTask() {
-    let input = document.getElementById("taskInput");
-    let task = input.value.trim();
+  const taskInput = document.getElementById("taskInput");
+  const taskText = taskInput.value.trim();
+  if (taskText === "") {
+    alert("Please enter a task.");
+    return;
+  }
+  createTaskElement(taskText, false);
+  taskInput.value = "";
+  saveTasks();
+}
 
-    if (task === "") {
-        alert("Please enter a task!");
+function createTaskElement(text, completed) {
+  const li = document.createElement("li");
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = completed;
+  checkbox.style.marginRight = "10px";
+
+  const span = document.createElement("span");
+  span.className = "task-text";
+  span.textContent = text;
+  if (completed) {
+    span.classList.add("completed");
+  }
+
+  checkbox.onclick = function () {
+    span.classList.toggle("completed", checkbox.checked);
+    saveTasks();
+  };
+
+  const editBtn = document.createElement("button");
+  editBtn.className = "btn-edit";
+  editBtn.textContent = "Edit";
+  editBtn.onclick = function () {
+    if (editBtn.textContent === "Edit") {
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = span.textContent;
+      input.classList.add("edit-input");
+      li.replaceChild(input, span);
+      editBtn.textContent = "Save";
+    } else {
+      const inputElement = li.querySelector("input[type='text']");
+      const updatedText = inputElement.value.trim();
+      if (updatedText === "") {
+        alert("Task cannot be empty.");
         return;
+      }
+      span.textContent = updatedText;
+      li.replaceChild(span, inputElement);
+      editBtn.textContent = "Edit";
+      saveTasks();
     }
+  };
 
-    let li = document.createElement("li");
+  const deleteBtn = document.createElement("button");
+  deleteBtn.className = "btn-delete";
+  deleteBtn.textContent = "Delete";
+  deleteBtn.onclick = function () {
+    li.remove();
+    saveTasks();
+  };
 
-    let span = document.createElement("span");
-    span.textContent = task;
-    span.classList.add("task-text");
+  const btnGroup = document.createElement("div");
+  btnGroup.className = "btn-group";
+  btnGroup.appendChild(editBtn);
+  btnGroup.appendChild(deleteBtn);
 
-    let editBtn = document.createElement("button");
-    editBtn.textContent = "Edit";
-    editBtn.classList.add("editBtn");
-    editBtn.onclick = function () {
-        if (editBtn.textContent === "Edit") {
-            // Change to input field
-            let inputBox = document.createElement("input");
-            inputBox.type = "text";
-            inputBox.value = span.textContent;
-            inputBox.classList.add("edit-input");
-            li.replaceChild(inputBox, span);
-            editBtn.textContent = "Save";
-        } else {
-            // Save changes
-            let inputBox = li.querySelector(".edit-input");
-            let newSpan = document.createElement("span");
-            newSpan.textContent = inputBox.value.trim() || "Unnamed Task";
-            newSpan.classList.add("task-text");
-            li.replaceChild(newSpan, inputBox);
-            editBtn.textContent = "Edit";
-            span = newSpan;
-        }
-    };
+  li.appendChild(checkbox);
+  li.appendChild(span);
+  li.appendChild(btnGroup);
 
-    let deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
-    deleteBtn.classList.add("deleteBtn");
-    deleteBtn.onclick = function () {
-        li.remove();
-    };
+  document.getElementById("taskList").appendChild(li);
+}
 
-    li.appendChild(span);
-    li.appendChild(editBtn);
-    li.appendChild(deleteBtn);
-
-    document.getElementById("taskList").appendChild(li);
-    input.value = "";
+function saveTasks() {
+  const taskList = document.getElementById("taskList").children;
+  const tasks = [];
+  for (let li of taskList) {
+    const text = li.querySelector(".task-text")?.textContent;
+    const completed = li.querySelector("input[type='checkbox']")?.checked;
+    if (text !== undefined) {
+      tasks.push({ text, completed });
+    }
+  }
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
