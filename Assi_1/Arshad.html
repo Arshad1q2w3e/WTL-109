@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Haven - Online Bookstore</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #f2f2f2 60%, #e0c3fc 100%);
+      color: #333;
+    }
+    .navbar {
+      box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+    }
+    header {
+      text-align: center;
+      padding: 140px 20px 100px 20px;
+      background: linear-gradient(120deg, #4b6cb7 60%, #aa8fe9 100%);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
+      opacity: 0.12;
+      z-index: 0;
+    }
+    header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 1;
+      letter-spacing: 2px;
+      text-shadow: 0 4px 16px rgba(44,62,80,0.18);
+    }
+    header p {
+      font-size: 1.4rem;
+      position: relative;
+      z-index: 1;
+    }
+    .divider {
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #fdd835, #b684df);
+      border-radius: 2px;
+      margin: 30px auto 40px auto;
+    }
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #2c3e50;
+      text-align: center;
+    }
+    .book {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 6px 18px rgba(170, 143, 233, 0.13);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      border: 2px solid #b684df22;
+    }
+    .book:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 12px 32px rgba(170, 143, 233, 0.18);
+      border-color: #b684df;
+    }
+    .book img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 8px #b684df33;
+    }
+    .book h3 {
+      font-size: 1.2rem;
+      margin: 10px 0 5px 0;
+      color: #4b6cb7;
+    }
+    .book .stars {
+      color: #fdd835;
+      font-size: 1.1rem;
+      margin-bottom: 6px;
+    }
+    .review {
+      font-style: italic;
+      font-size: 0.95rem;
+      color: #444;
+      margin-top: 10px;
+      min-height: 40px;
+    }
+    .btn-buy {
+      background: linear-gradient(90deg, #fdd835, #b684df);
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      border-radius: 8px;
+      padding: 8px 22px;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+    .btn-buy:hover {
+      background: linear-gradient(90deg, #b684df, #fdd835);
+      color: #222;
+    }
+    #about, #contact, #testimonials {
+      background: #aa8fe9;
+      margin-top: 30px;
+      padding: 40px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+    #testimonials {
+      background: #f8f6ff;
+      color: #4b6cb7;
+      margin-bottom: 30px;
+    }
+    .testimonial {
+      font-size: 1.1rem;
+      font-style: italic;
+      margin-bottom: 18px;
+      position: relative;
+      padding-left: 30px;
+    }
+    .testimonial::before {
+      content: '\201C';
+      font-size: 2.5rem;
+      color: #b684df;
+      position: absolute;
+      left: 0; top: -10px;
+    }
+    .testimonial-author {
+      font-weight: 600;
+      color: #2c3e50;
+      margin-left: 10px;
+    }
+    .newsletter {
+      background: #4b6cb7;
+      color: #fff;
+      padding: 30px 20px;
+      border-radius: 10px;
+      margin: 40px auto 0 auto;
+      max-width: 500px;
+      box-shadow: 0 2px 12px #4b6cb733;
+      text-align: center;
+    }
+    .newsletter input[type="email"] {
+      border-radius: 6px;
+      border: none;
+      padding: 10px 14px;
+      margin-right: 10px;
+      width: 60%;
+      max-width: 220px;
+    }
+    .newsletter button {
+      background: #fdd835;
+      color: #4b6cb7;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 18px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .newsletter button:hover {
+      background: #b684df;
+      color: #fff;
+    }
+    footer {
+      background-color: #1e1e2f;
+      color: white;
+      text-align: center;
+      padding: 25px 10px;
+      margin-top: 60px;
+    }
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.2rem; }
+      .book img { height: 160px; }
+      .newsletter input[type="email"] { width: 100%; margin-bottom: 10px; }
+      .newsletter button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow rounded-bottom sticky-top py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#">
+        <i class="fa-solid fa-book-open-reader me-2 text-warning"></i>
+        <span>Book Haven</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#shop">Shop</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header id="home">
+    <h1>Discover Your Next Favorite Book</h1>
+    <p>Explore bestselling titles, hidden gems, and timeless classics</p>
+    <div class="divider"></div>
+  </header>
+
+  <!-- Shop Section -->
+  <section id="shop" class="container text-center my-5">
+    <h2>Explore Books by Category</h2>
+    <div class="divider"></div>
+    <select class="form-select w-auto mx-auto my-4" id="bookType" onchange="filterBooks()" disabled>
+      <option value="all">All Categories</option>
+      <option value="fiction">Fiction</option>
+      <option value="non-fiction">Non-Fiction</option>
+      <option value="self-help">Self-Help</option>
+      <option value="biography">Biography</option>
+    </select>
+    <div class="row g-4" id="bookList">
+      <!-- Book Cards -->
+      <div class="col-md-3 col-sm-6">
+        <div class="book">
+          <img src="images/img1.png" alt="The Adventure Of Sherlock Holmes">
+          <h3>The Adventure Of Sherlock Holmes</h3>
+          <div class="stars">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-alt"></i>
+          </div>
+          <p class="fw-bold">₹499</p>
+          <p class="review">"A psychological thriller that keeps you hooked."</p>
+          <button class="btn btn-buy" disabled>Buy Now</button>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="book">
+          <img src="images/img5.png" alt="Atomic Habits">
+          <h3>Atomic Habits</h3>
+          <div class="stars">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+          </div>
+          <p class="fw-bold">₹550</p>
+          <p class="review">"Transform your life with small changes."</p>
+          <button class="btn btn-buy" disabled>Buy Now</button>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="book">
+          <img src="images/img3.png" alt="King">
+          <h3>King</h3>
+          <div class="stars">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-alt"></i><i class="fa fa-star-o"></i>
+          </div>
+          <p class="fw-bold">₹630</p>
+          <p class="review">"An inspiring journey of self-discovery."</p>
+          <button class="btn btn-buy" disabled>Buy Now</button>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="book">
+          <img src="images/img4.png" alt="Lincoln Vs Davis">
+          <h3>Lincoln Vs Davis</h3>
+          <div class="stars">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-alt"></i>
+          </div>
+          <p class="fw-bold">₹599</p>
+          <p class="review">"Michelle Obama’s powerful memoir."</p>
+          <button class="btn btn-buy" disabled>Buy Now</button>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="book">
+          <img src="images/img2.png" alt="Harry Potter">
+          <h3>Harry Potter</h3>
+          <div class="stars">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+          </div>
+          <p class="fw-bold">₹399</p>
+          <p class="review">"A magical journey about dreams and destiny."</p>
+          <button class="btn btn-buy" disabled>Buy Now</button>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="book">
+          <img src="images/img6.png" alt="Mindset">
+          <h3>Mindset</h3>
+          <div class="stars">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-alt"></i><i class="fa fa-star-o"></i>
+          </div>
+          <p class="fw-bold">₹470</p>
+          <p class="review">"A blunt guide to living a better life."</p>
+          <button class="btn btn-buy" disabled>Buy Now</button>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="book">
+          <img src="images/img7.png" alt="Sapiens">
+          <h3>Sapiens</h3>
+          <div class="stars">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-alt"></i>
+          </div>
+          <p class="fw-bold">₹749</p>
+          <p class="review">"A brief history of humankind."</p>
+          <button class="btn btn-buy" disabled>Buy Now</button>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="book">
+          <img src="images/img8.png" alt="Deep Work">
+          <h3>Deep Work</h3>
+          <div class="stars">
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i>
+          </div>
+          <p class="fw-bold">₹499</p>
+          <p class="review">"Master the art of focused success."</p>
+          <button class="btn btn-buy" disabled>Buy Now</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="container">
+    <h2>What Our Readers Say</h2>
+    <div class="divider"></div>
+    <div class="testimonial">Absolutely love the variety and the quick delivery!<span class="testimonial-author">- Priya S.</span></div>
+    <div class="testimonial">A book lover's paradise. The recommendations are always spot on.<span class="testimonial-author">- Rahul M.</span></div>
+    <div class="testimonial">Customer service is fantastic. Will shop again!<span class="testimonial-author">- Ayesha K.</span></div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="container">
+    <h2>About Us</h2>
+    <div class="divider"></div>
+    <p>Book Haven is your trusted online destination for all things books. Whether you're searching for the latest bestsellers or timeless classics, we offer a wide variety to satisfy every reader's curiosity. Our mission is to connect people to the power and joy of reading.</p>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="container">
+    <h2>Contact Us</h2>
+    <div class="divider"></div>
+    <p><strong>Email:</strong> arshadshaikh@gmail.com</p>
+    <p><strong>Phone:</strong> +91 7028495022</p>
+    <p><strong>Address:</strong> 123 Knowledge Street, Book City, IN</p>
+  </section>
+
+  <!-- Newsletter Signup -->
+  <div class="newsletter">
+    <h4>Subscribe to our Newsletter</h4>
+    <form action="#" method="post">
+      <input type="email" placeholder="Enter your email" required>
+      <button type="submit" disabled>Subscribe</button>
+    </form>
+    <small>Get updates on new arrivals, offers, and more!</small>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Book Haven. All rights reserved.
+  </footer>
+
+  <!-- Bootstrap JS Bundle (for navbar only) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
